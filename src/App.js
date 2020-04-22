@@ -25,15 +25,18 @@ class App extends Component {
 
     const persons = [...this.state.persons];
     persons[personIndex] = person;
+    
+    this.setState({persons: persons});
 
-    this.setState({ persons: persons });
   }
 
   deletePersonHandler = (personIndex) => {
     // copy the array using spread, updating state in an immutable manner
+    // slice copies the array
+    // const persons = this.state.persons.slice();
     const persons = [...this.state.persons];
     persons.splice(personIndex, 1);
-    this.setState({persons: persons})
+    this.setState({persons: persons});
   }
 
   togglePersonsHandler = () => {
@@ -55,15 +58,15 @@ class App extends Component {
     if ( this.state.showPersons ) {
       persons = (
         <div>
-          { this.state.persons.map((person, index) => {
+          {this.state.persons.map((person, index) => {
             return <Person 
-              click={this.deletePersonHandler.bind(this, index)}
-              name={person.name} 
+              click={() => this.deletePersonHandler(index)}
+              name={person.name}
               age={person.age}
               key={person.id}
               changed={(event) => this.nameChangedHandler(event, person.id)}/>
-          }) }
-        </div> 
+          })}
+        </div>
       );
     }
 
